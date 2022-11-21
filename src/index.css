@@ -18,6 +18,9 @@ body {
   background-color: var(--randomColor);
   color: #999;
   color: var(--randomColor);
+  transition-property: color, background-color;
+  transition-duration: 1s;
+  /* transition-timing-function: easeInOutBack; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,6 +67,8 @@ body {
 .btn{
   height: 3.8rem;
   background-color: var(--randomColor);
+  transition-property: background-color;
+  transition-duration: 1s;
   border-radius: 3px;
   border: none;
   color: white;
