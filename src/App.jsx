@@ -21,21 +21,22 @@ function App() {
     ];
     return palette[i];
   };
+  const initialQuote = {
+    quote: "loading...",
+    author: "loading...",
+  };
 
-  const newQuote = () => {
+  const [quotesArray, setQuotesArray] = React.useState([]);
+  const [currentQuote, setCurrentQuote] = React.useState(initialQuote);
+
+  const newQuote = (source) => {
     document.documentElement.style.setProperty(
       "--randomColor",
       getRandomColor()
     );
     const j = Math.floor(Math.random() * 100);
-    setCurrentQuote(quotesArray[j]);
+    setCurrentQuote(source[j] ? source[j] : initialQuote);
   };
-
-  const [quotesArray, setQuotesArray] = React.useState([]);
-  const [currentQuote, setCurrentQuote] = React.useState({
-    quote: "loading...",
-    author: "loading...",
-  });
 
   React.useEffect(() => {
     fetch(
@@ -43,11 +44,12 @@ function App() {
     )
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data.quotes);
         setQuotesArray(data.quotes);
+        newQuote(data.quotes);
       });
-    newQuote();
   }, []);
+
+  //////////////////////////////////////////////////////////////////////
 
   return (
     <div className="app">
@@ -65,7 +67,10 @@ function App() {
             <button className="btn btn-icon">
               <i className="fa-brands fa-tumblr"></i>
             </button>
-            <button className="btn btn-new-q" onClick={newQuote}>
+            <button
+              className="btn btn-new-q"
+              onClick={() => newQuote(quotesArray)}
+            >
               New quote
             </button>
           </div>
