@@ -22,7 +22,6 @@ body {
   color: var(--randomColor);
   transition-property: color, background-color;
   transition-duration: 1s;
-  /* transition-timing-function: easeInOutBack; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,8 +98,3 @@ body {
 .btn:hover{
   opacity: 0.9;
 }
-/* .opacitor{
-  opacity: 1;
-  transition-property: opacity;
-  transition-duration: .5s;
-} */
