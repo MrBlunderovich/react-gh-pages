@@ -29,13 +29,32 @@ function App() {
   const [quotesArray, setQuotesArray] = React.useState([]);
   const [currentQuote, setCurrentQuote] = React.useState(initialQuote);
 
+  /* const opacitor = (opacity) => {
+    document.getElementsByClassName("opacitor").forEach((element) => {
+      console.log(element);
+      element.style.setProperty("opacity", opacity);
+    });
+  }; */
+  const opacitor = (opacity) => {
+    document.getElementById("quote").style.setProperty("opacity", opacity);
+    document.getElementById("author").style.setProperty("opacity", opacity);
+  };
+
   const newQuote = (source) => {
+    //document.getElementById("quote").style.setProperty("opacity", 0);
+    opacitor(0);
     document.documentElement.style.setProperty(
       "--randomColor",
       getRandomColor()
     );
-    const j = Math.floor(Math.random() * 100);
-    setCurrentQuote(source[j] ? source[j] : initialQuote);
+    setTimeout(() => {
+      const j = Math.floor(Math.random() * 100);
+      setCurrentQuote(source[j] ? source[j] : initialQuote);
+    }, 500);
+    /* const j = Math.floor(Math.random() * 100);
+    setCurrentQuote(source[j] ? source[j] : initialQuote); */
+    //document.getElementById("quote").style.setProperty("opacity", 1);
+    //setTimeout(opacitor, 500, "quote", 1);
   };
 
   React.useEffect(() => {
@@ -48,26 +67,51 @@ function App() {
         newQuote(data.quotes);
       });
   }, []);
+  React.useEffect(() => {
+    opacitor(1);
+  }, [currentQuote]);
+
+  /* const handleTweet = () => {
+    console.log("tweet");
+  }; */
 
   //////////////////////////////////////////////////////////////////////
 
   return (
     <div className="app">
       <div id="wrapper">
-        <div id="content">
-          <p id="quote">
+        <div id="quote-box">
+          <p id="quote" className="opacitor">
             <i className="fa-solid fa-quote-left" id="quotemark"></i>
-            {currentQuote.quote}
+            {/* <span className="quote--text"></span> */}
+            <span id="text">{currentQuote.quote}</span>
           </p>
-          <p id="author">- {currentQuote.author}</p>
+          <p id="author" className="opacitor">
+            - {currentQuote.author}
+          </p>
           <div id="btn-container">
-            <button className="btn btn-icon">
+            <a
+              href="https://twitter.com/intent/tweet/"
+              target="_blank"
+              rel="noreferer noopener"
+              className="btn btn-icon"
+              id="tweet-quote"
+              /* onClick={handleTweet} */
+            >
               <i className="fa-brands fa-twitter"></i>
-            </button>
-            <button className="btn btn-icon">
+            </a>
+            {/* <button
+              className="btn btn-icon"
+              id="tweet-quote"
+              onClick={handleTweet}
+            >
+              <i className="fa-brands fa-twitter"></i>
+            </button> */}
+            {/* <button className="btn btn-icon">
               <i className="fa-brands fa-tumblr"></i>
-            </button>
+            </button> */}
             <button
+              id="new-quote"
               className="btn btn-new-q"
               onClick={() => newQuote(quotesArray)}
             >
